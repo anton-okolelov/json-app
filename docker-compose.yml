@@ -1,0 +1,27 @@
+version: '3.7'
+
+services:
+  db:
+    image: postgres:14.3-alpine
+    environment:
+      - TERM=xterm
+      - POSTGRES_DB=jsonapp
+      - POSTGRES_USER=jsonapp
+      - POSTGRES_PASSWORD=jsonapp
+      - SERVICE_NAME=pg
+      - SERVICE_TAGS=internal,db
+      - PAGER=less
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    expose:
+      - "6439"
+    ports:
+      - "6439:5432"
+    volumes:
+      - data:/var/lib/postgresql
+    networks:
+      - jsonapp
+volumes:
+  data:
+
+networks:
+  jsonapp:
