@@ -23,6 +23,7 @@ func New(userService service.Service, port int) Server {
 
 	s.router.Post("/users", s.createUser)
 	s.router.Get("/users/{id:[0-9]+}", s.getUser)
+	s.router.Get("/users", s.getAllUsers)
 	return s
 }
 

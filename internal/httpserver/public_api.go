@@ -61,3 +61,13 @@ func (s Server) getUser(w http.ResponseWriter, r *http.Request) {
 
 	render.JSON(w, r, u)
 }
+
+func (s Server) getAllUsers(w http.ResponseWriter, r *http.Request) {
+	users, err := s.userService.GetAllUsers()
+	if err != nil {
+		fmt.Printf("%+v", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	render.JSON(w, r, users)
+}
