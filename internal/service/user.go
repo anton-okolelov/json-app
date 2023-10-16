@@ -50,3 +50,22 @@ func (s Service) GetUser(id int) (domain.User, error) {
 
 	return u, nil
 }
+
+func (s Service) GetAllUsers() ([]domain.User, error) {
+	rows, err := s.db.Query(context.Background(), `SELECT name, age FROM users`)
+	if err != nil {
+		return nil, fmt.Errorf("don't have any users")
+	}
+	users := make([]domain.User, 0)
+	for rows.Next() {
+		var u domain.User
+		err = rows.Scan(&u.Name, &u.Age)
+		if err != nil {
+			return nil, fmt.Errorf("error on scan user: %w", err)
+		}
+
+		users = append(users, u)
+	}
+
+	return users, nil
+}
